@@ -1,0 +1,19 @@
+{
+    "name": "kzu/filesystem",
+    "type": "library",
+    "authors": [
+        {
+            "name": "MarquandT",
+            "email": "thibault@marquand.pro"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "kzu/security": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Kzu\\Filesystem\\": "src/"
+        }
+    }
+}
