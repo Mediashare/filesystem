@@ -25,7 +25,7 @@ Trait Filesystem {
     static public function read(string $filepath): ?string {
         if (!file_exists($filepath)): return null; endif;
         $content = file_get_contents($filepath);
-        if (pathinfo($filepath)['extension'] ?? null === 'encrypted'):
+        if (!empty(pathinfo($filepath)['extension']) && pathinfo($filepath)['extension'] === 'encrypted'):
             $content = Crypto::decrypt($content, Filesystem::$crypto_secret);
         endif;
         return $content ?? "";
@@ -37,7 +37,7 @@ Trait Filesystem {
         endif;
         
         if ($encrypted):
-            if (pathinfo($filepath)['extension'] ?? null !== 'encrypted'):
+            if (!empty(pathinfo($filepath)['extension']) && pathinfo($filepath)['extension'] !== 'encrypted'):
                 $filepath = $filepath.".encrypted";
             endif;
             $content = Crypto::encrypt($content, Filesystem::$crypto_secret);
