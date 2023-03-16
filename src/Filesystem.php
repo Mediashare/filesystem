@@ -23,6 +23,8 @@ Trait Filesystem {
     }
 
     static public function read(string $filepath): ?string {
+        $filepath = str_replace("/", DIRECTORY_SEPARATOR, $filepath);
+        
         if (!file_exists($filepath)): return null; endif;
         $content = file_get_contents($filepath);
         if (!empty(pathinfo($filepath)['extension']) && pathinfo($filepath)['extension'] === 'encrypted'):
@@ -32,6 +34,8 @@ Trait Filesystem {
     }
 
     static public function write(string $filepath, ?string $content = "", ?bool $encrypted = false): bool {
+        $filepath = str_replace("/", DIRECTORY_SEPARATOR, $filepath);
+        
         if (!file_exists($directory = dirname($filepath))):
             Filesystem::mkdir($directory);
         endif;
@@ -52,6 +56,8 @@ Trait Filesystem {
     }
 
     static public function mkdir($directory): bool {
+        $directory = str_replace("/", DIRECTORY_SEPARATOR, $directory);
+        
         if (!file_exists($directory)):
             if (!mkdir($directory)): Filesystem::mkdir(dirname($directory)); endif;
         endif;    
@@ -59,6 +65,8 @@ Trait Filesystem {
     }
 
     static public function delete(string $filepath): bool {
+        $filepath = str_replace("/", DIRECTORY_SEPARATOR, $filepath);
+        
         if (file_exists($filepath)):
             return unlink($filepath) ?? false;
         else: return false; endif;
